@@ -21,6 +21,13 @@
   padding:10px;
   padding-bottom:30px;
 }
+.ua-green{
+  color:#43A047;
+}
+.ua-red {
+  color:#af3534;
+  font-weight: bold;
+}
 .ua-form {
   position: relative;
   z-index: 1;
@@ -80,6 +87,9 @@
 
 
 /* form-errors */
+.help-block {
+  padding-bottom:10px;
+}
 .has-error .help-block,
 .has-error .control-label,
 .has-error .radio,

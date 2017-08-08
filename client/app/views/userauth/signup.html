@@ -1,12 +1,16 @@
-<div class="ua-back-message"><a ui-sref="{{prevState.state}}">Send me back to the {{prevState.name}} page</a></div>
-<div class="ua-title">Create a Free Account</div>
+<div class="ua-back-message"><a ui-sref="{{prevState.state}}">
+    {{['Ga terug naar de','Send me back to the'][locale]}} 
+    {{prevState.name}} 
+    {{['pagina', 'page'][locale]}}</a></div>
+<div class="ua-title">{{["Gratis Account", 'Create a Free Account'][locale]}}</div>
+<div ng-show="signupError" class="ua-message ua-red">{{signupErrorMessage}}</div>
 <div class="ua-form">
-    <form>
-        <input type="text" placeholder="email address"/>
-        <input type="password" placeholder="password"/>
-        <input type="password" placeholder="confirm password"/>
-        <button>Create</button>
+    <form ng-submit="signup()">
+        <input type="email" placeholder="email"  ng-model="credentials.email"/>
+        <input type="password" placeholder="{{['wachtwoord','password'][locale]}}"  ng-model="credentials.password"/>
+        <input type="password" placeholder="{{['bevestig wachtwoord','confirm password'][locale]}}"  ng-model="credentials.password2"/>
+        <button type="submit">{{['Maak Aan', 'Create'][locale]}}</button>
         <p>TODO: sign up with facebook?</p>
-        <p class="ua-message">Already registered? <a ui-sref="app.login">Sign In</a></p>
+        <p class="ua-message">{{['Heeft u al een account?','Already registered?'][locale]}} <a ui-sref="app.login">Log in</a></p>
     </form>
 </div>

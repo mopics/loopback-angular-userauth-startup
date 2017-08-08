@@ -1,7 +1,8 @@
 
-<div class="ua-back-message"><a ui-sref="app">Send me back to the home page</a></div>
-<div class="ua-title">Member Login</div>
-<div ng-if="status=='success_reset'" class="ua-message">Your password has been reset. You can now log in.</div>
+<div class="ua-back-message"><a ui-sref="app">{{ ['Stuur me terug naar de home pagina','Send me back to the home page'][locale] }}</a></div>
+<div class="ua-title">{{['Login','Member Login'][locale]}}</div>
+<div ng-if="status=='success_reset'" class="ua-message ua-green">{{ ['Je wachtwoord is gereset. Je kunt nu inloggen', 'Your password has been reset. You can now log in.'][locale] }}</div>
+<div ng-show="loginError" class="ua-message ua-red">{{loginErrorMessage}}</div>
 <div class="ua-form">
     
     <form ng-submit="login()" role="form" name="loginform" novalidate>
@@ -10,21 +11,21 @@
             <input type="email" class="form-control" name="emailid" id="emailid" placeholder="email"
                 ng-model="credentials.email" required/>
             <span ng-show="loginform.emailid.$invalid && !loginform.emailid.$pristine"
-                class="help-block">Enter a valid email address. </span>
+                class="help-block">{{['Voer een geldig email adres in','Enter a valid email address.'][locale]}}</span>
             <span ng-show="loginform.emailid.$error.required && !loginform.emailid.$pristine"
-                class="help-block">Enter a email address.</span>
+                class="help-block">{{['Voer een email adres in','Enter a email address.'][locale]}}</span>
         </div>
         <div ng-class="{ 'has-error' : loginform.pw.$error.required &&
             !loginform.pw.$pristine }">
             <input type="password" class="form-control" name="pw" id="pw" 
-                placeholder="password" ng-model="credentials.password" required/>
+                placeholder="{{['wachtwoord','password'][locale]}}" ng-model="credentials.password" required/>
             <span ng-show="loginform.pw.$error.required && !loginform.pw.$pristine"
-                class="help-block">Enter a email address.</span>
+                class="help-block">{{['Voer een wachtwoord in','Enter a password.'][locale]}}</span>
             
         </div>
         <div class="grom-group">
             <button class="ua-btn" type="submit" ng-disabled="loginform.$invalid">login</button>
         </div>
-        <p class="ua-message"><a ui-sref="app.resetpassword"> Forgot password? </a></p>
+        <p class="ua-message"><a ui-sref="app.resetpassword"> {{['Wachtwoord vergeten?','Forgot password?'][locale]}} </a></p>
     </form>
 </div>

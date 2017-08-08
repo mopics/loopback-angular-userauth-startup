@@ -18,8 +18,9 @@ angular
     'ngTouch',
     'lbServices',
   ])
+  .constant('LOCALE', 0 ) // 0=nl, 1=en
   .config(function ( $stateProvider, $urlRouterProvider, LoopBackResourceProvider ) {
-    LoopBackResourceProvider.setUrlBase('http://localhost:3000');
+    LoopBackResourceProvider.setUrlBase('http://localhost:3000/api');
     $stateProvider
       .state('app', { // route of home page
         url:'/',
