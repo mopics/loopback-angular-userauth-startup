@@ -1,0 +1,23 @@
+<div class="header">
+    <div class="navbar navbar-default" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+
+        <a class="navbar-brand" href="#/">client</a>
+        </div>
+
+        <div class="collapse">
+
+        <ul class="nav navbar-nav">
+            <li class="active"><a ui-sref="app">Home</a></li>
+            <li><a ui-sref="app.about">About</a></li>
+            <li><a ng-href="#/">Contact</a></li>
+            <li><a ui-sref="app.login">Login</a></li>
+            <li><a ui-sref="app.signup({prevState:'app',prevStateName:'home'})">Sign up</a></li>
+            <li><a ui-sref="app.setnewpassword({reset_key:'blabla13'})">Reset Password</a></li>
+            <li><a ui-sref="app.login({status:'success_reset'})">Login after Reset</a></li>
+        </ul>
+        </div>
+    </div>
+    </div>
+</div>
