@@ -25,7 +25,10 @@ angular
       .state('app', { // route of home page
         url:'/',
         views: {
-          'header':{templateUrl:'views/header.html'},
+          'header':{
+            templateUrl:'views/header.html',
+            controller:'HeaderCtrl'
+          },
           'content':{
             templateUrl: 'views/main.html',
             controller: 'MainCtrl',
@@ -53,6 +56,15 @@ angular
           }
         }
       })
+      .state('app.logout',{
+        url:'logout',
+        views:{
+          'content@':{
+            templateUrl:'views/userauth/logout.html',
+            controller:'LogoutCtrl'
+          }
+        }
+      })
       .state('app.signup', {
         url:'signup',
         params:{ prevState:null, prevStateName:null},
@@ -60,6 +72,15 @@ angular
           'content@':{
             templateUrl:'views/userauth/signup.html',
             controller:'SignupCtrl'
+          }
+        }
+      })
+      .state('app.verified', {
+        url:'verified',
+        views:{
+          'content@':{
+            templateUrl:'views/userauth/verified.html',
+            controller:'VerifiedCtrl'
           }
         }
       })

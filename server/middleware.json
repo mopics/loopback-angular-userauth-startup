@@ -2,6 +2,9 @@
   "initial:before": {
     "loopback#favicon": {}
   },
+  "inital:after": {
+    "./middlewares/lang": {}
+  },
   "initial": {
     "compression": {},
     "cors": {
@@ -15,7 +18,7 @@
     "helmet#frameguard": {
       "params": [
         "deny"
-       ]
+      ]
     },
     "helmet#hsts": {
       "params": {
@@ -40,7 +43,11 @@
       ]
     }
   },
-  "files": {},
+  "files": {
+    "loopback#static": {
+      "params": "$!../client/app/"
+    }
+  },
   "final": {
     "loopback#urlNotFound": {}
   },

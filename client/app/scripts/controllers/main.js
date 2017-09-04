@@ -14,4 +14,17 @@ angular.module('clientApp')
       'AngularJS',
       'Karma'
     ];
+  })
+  .controller('HeaderCtrl', function( $scope, $rootScope, AppUser ){
+    $scope.loginResult = null;
+    $rootScope.$watch("loginResult", function() {
+      if( $rootScope.loginResult ){
+        $scope.loginResult = $rootScope.loginResult;
+      }
+      else {
+        $scope.loginResult = null;
+      }
+      
+    });
+
   });

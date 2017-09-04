@@ -8,7 +8,7 @@
  * Controller of the clientApp
  */
 angular.module('clientApp')
-.controller('LoginCtrl', function($scope, $rootScope, $stateParams, User, LOCALE ){
+.controller('LoginCtrl', function($scope, $rootScope, $state, $stateParams, AppUser, LOCALE ){
     $scope.status = $stateParams.status;
     $scope.userRegistered = true;
     $scope.locale = LOCALE;
@@ -21,9 +21,17 @@ angular.module('clientApp')
     $scope.loginErrorMessage = "";
 
     $scope.login = function() {
-      $scope.loginResult = User.login($scope.credentials,
+      $scope.loginResult = AppUser.login($scope.credentials,
         function(res) { 
-          $rootScope.loginResult = res;
+          if( !res.user.emailVerified ){
+            $scope.loginErrorMessage = ['Je hebt je email nog niet geverifieerd.',
+            "You haven't verified your email."][$scope.locale];
+          }
+          else{
+            $rootScope.loginResult = res;
+            // redirect to ???
+            $state.go('app');
+          }
         }, function(res) {
           $scope.loginError = true;
           if( res.status===401 ){ // Unauthorized
@@ -35,7 +43,34 @@ angular.module('clientApp')
       });
     };
 })
-.controller('SignupCtrl', function($scope,$stateParams,User,LOCALE){
+.controller('LogoutCtrl', function($scope, $rootScope, $state, AppUser, LOCALE){
+  $scope.locale = LOCALE;
+  $scope.logoutMessage = ["Bezig met uitloggen ...",
+  "Logging out ..."][$scope.locale];
+  $scope.loggedOut = false;
+  if( $rootScope.loginResult ){
+    AppUser.logout( $rootScope.loginResult,
+      function(res){
+        $scope.logoutMessage = ["U bent succesvol uit gelogd!",
+        "You are successfully logged out."][$scope.locale];
+        $scope.loggedOut = true;
+        $rootScope.loginResult = null;
+      },
+      function( res ){
+        $scope.logoutMessage = ["U bent succesvol uit gelogd!",
+        "You are successfully logged out."][$scope.locale];
+        $scope.loggedOut = true;
+        $rootScope.loginResult = null;
+      }
+    );
+  }
+  else {
+    $scope.logoutMessage = ["U bent succesvol uit gelogd!",
+    "You are successfully logged out."][$scope.locale];
+    $scope.loggedOut = true;
+  }
+})
+.controller('SignupCtrl', function($scope,$stateParams,AppUser,LOCALE){
   $scope.locale = LOCALE;
   $scope.prevState = { state:'app', name:'home'};
   if($stateParams.prevState){
@@ -48,22 +83,28 @@ angular.module('clientApp')
   $scope.credentials = { email:"", password:"" };
   $scope.signupError = false;
   $scope.signupErrorMessage = "";
+  $scope.emailSend = false;
 
   $scope.signup = function(){
-    User.create({email: $scope.credentials.email, password: $scope.credentials.password}, function( res ) {
-      console.log( res );
-      // TODO: send an verification email to activate new user
-      // TODO: set some sort of timer : if user does not activate new account in 3 days it will be destroyed.
-    },
-    function( res ){
-      if( res.status===422 ) { // statusText="Unprocessable Entity", email already in use
-        $scope.signupError = true;
-        $scope.signupErrorMessage = ["Deze email is al in gebruik", "This email is already in use"][$scope.locale];
-      }
-      console.log(res.status);
-    });
+    AppUser.create({email: $scope.credentials.email, password: $scope.credentials.password}, 
+      // SUCCESS handler
+      function( res ) {
+        console.log( res );
+        $scope.emailSend = true;
+      },
+      // ERROR handler
+      function( res ){
+        if( res.status===422 ) { // statusText="Unprocessable Entity", email already in use
+          $scope.signupError = true;
+          $scope.signupErrorMessage = ["Deze email is al in gebruik", "This email is already in use"][$scope.locale];
+        }
+        console.log(res.status);
+      });
   }
 })
+.controller( 'VerifiedCtrl', function($scope, LOCALE){
+  $scope.locale = LOCALE;
+} )
 .controller('ResetPasswordCtrl', function($scope,LOCALE){
   $scope.locale = LOCALE;
   $scope.emailSend = false;

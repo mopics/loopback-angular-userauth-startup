@@ -4,13 +4,23 @@
     {{['pagina', 'page'][locale]}}</a></div>
 <div class="ua-title">{{["Gratis Account", 'Create a Free Account'][locale]}}</div>
 <div ng-show="signupError" class="ua-message ua-red">{{signupErrorMessage}}</div>
-<div class="ua-form">
+<div ng-show="!emailSend" class="ua-form">
     <form ng-submit="signup()">
         <input type="email" placeholder="email"  ng-model="credentials.email"/>
         <input type="password" placeholder="{{['wachtwoord','password'][locale]}}"  ng-model="credentials.password"/>
         <input type="password" placeholder="{{['bevestig wachtwoord','confirm password'][locale]}}"  ng-model="credentials.password2"/>
         <button type="submit">{{['Maak Aan', 'Create'][locale]}}</button>
         <p>TODO: sign up with facebook?</p>
-        <p class="ua-message">{{['Heeft u al een account?','Already registered?'][locale]}} <a ui-sref="app.login">Log in</a></p>
+        <p class="ua-message">{{['Heeft u al een account?','A tered?'][locale]}} <a ui-sref="app.login">Log in</a></p>
     </form>
+</div>
+<div ng-show="emailSend" class="ua-email-send">
+    <p class="ua-message">{{['We hebben een email gestuurd naar','We have sent an email to'][locale]}} {{email}}.
+        {{['Volg de instructies in de email op om je account te activeren.','Follow the instructions in the email to activate your account.'][locale]}}</p>
+    <p class="ua-message">{{
+        ["Als je geen email hebt ontvangen check dan je spam folder of",
+        "If you don't receive the email, please check your spam folder or"][locale]
+        }} 
+        <a ui-sref="app.contact">{{['Maak contact met ons','Contact Support'][locale]}}</a>
+    </p>
 </div>
