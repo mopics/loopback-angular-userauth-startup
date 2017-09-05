@@ -3,20 +3,51 @@
     {{prevState.name}} 
     {{['pagina', 'page'][locale]}}</a></div>
 <div class="ua-title">{{["Gratis Account", 'Create a Free Account'][locale]}}</div>
-<div ng-show="signupError" class="ua-message ua-red">{{signupErrorMessage}}</div>
-<div ng-show="!emailSend" class="ua-form">
-    <form ng-submit="signup()">
-        <input type="email" placeholder="email"  ng-model="credentials.email"/>
-        <input type="password" placeholder="{{['wachtwoord','password'][locale]}}"  ng-model="credentials.password"/>
-        <input type="password" placeholder="{{['bevestig wachtwoord','confirm password'][locale]}}"  ng-model="credentials.password2"/>
-        <button type="submit">{{['Maak Aan', 'Create'][locale]}}</button>
-        <p>TODO: sign up with facebook?</p>
-        <p class="ua-message">{{['Heeft u al een account?','A tered?'][locale]}} <a ui-sref="app.login">Log in</a></p>
+
+<div ng-show="!emailSend" class="ua-form" ng-class="{'ua-progress':serverWait}">
+    <div ng-show="signupError" class="ua-error">{{signupErrorMessage}}</div>
+    <form ng-submit="signup()" role="form" name="signupform" novalidate>
+
+        <div>
+            <input type="email"  class="form-control" name="emailid" id="emailid" 
+                placeholder="email"  ng-model="credentials.email" required/>
+            <div ng-show="signupform.emailid.$invalid && !signupform.emailid.$pristine"
+                class="ua-help">{{['Voer een geldig email adres in','Enter a valid email address.'][locale]}}</div>
+            <div ng-show="signupform.emailid.$error.required && !signupform.emailid.$pristine"
+                class="ua-help">{{['Voer een email adres in','Enter a email address.'][locale]}}</div>
+        </div>
+
+        <div>
+            <input type="password" class="form-control" name="password" id="password" 
+                placeholder="{{['wachtwoord','password'][locale]}}" 
+                ng-model="credentials.password" required/>
+            <div ng-show="!signupform.password.$pristine && signupform.password.$error.required"
+                class="ua-help">{{['Voer een wachtwoord in.','Enter a password.'][locale]}}</div>
+        </div>
+
+        <div>
+            <input type="password" class="form-control" name="password2" id="password2" 
+                placeholder="{{['bevestig wachtwoord','confirm password'][locale]}}"
+                ng-model="credentials.password2" required/>
+            <div ng-show="!signupform.password2.$pristine && credentials.password2 !== credentials.password"
+                class="ua-help">{{['De wachtwoorden komen niet overeen.','The passwords do not match.'][locale]}}</div>
+        </div>
+
+        <div>
+            <button class="ua-btn" 
+                ng-class="serverWait ? 'ua-progress' : 'ua-pointer'" 
+                type="submit" 
+                ng-disabled="loginform.$invalid || serverWait" >
+                {{['Maak Aan', 'Create'][locale]}}</button>
+        </div>
+
+        <!--<p>TODO: sign up with facebook?</p>-->
+        <p class="ua-message">{{['Heeft u al een account?','Already registered?'][locale]}} <a ui-sref="app.login">Log in</a></p>
     </form>
 </div>
 <div ng-show="emailSend" class="ua-email-send">
     <p class="ua-message">{{['We hebben een email gestuurd naar','We have sent an email to'][locale]}} {{email}}.
-        {{['Volg de instructies in de email op om je account te activeren.','Follow the instructions in the email to activate your account.'][locale]}}</p>
+        {{['Klik op de link in de email op om je account te activeren.','Click on the link in the email to activate your account.'][locale]}}</p>
     <p class="ua-message">{{
         ["Als je geen email hebt ontvangen check dan je spam folder of",
         "If you don't receive the email, please check your spam folder or"][locale]

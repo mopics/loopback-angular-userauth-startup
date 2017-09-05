@@ -1,19 +1,21 @@
-@import url(https://fonts.googleapis.com/css?family=Roboto:300);
+@import url('https://fonts.googleapis.com/css?family=Gloria+Hallelujah|Homemade+Apple|Paytone+One|Roboto');
 
 .ua-login-page {
   width: 360px;
   padding: 8% 0 0;
   margin: auto;
 }
-.ua-back-message {
-  font-size: 1em;
-  padding:20px;
-  text-align: center;
-}
 .ua-title {
   font-size: 2em;
   text-align: center;
   padding:20px;
+}
+
+/* callback messages */
+.ua-back-message {
+  font-size: 1em;
+  padding:20px;
+  text-align: center;
 }
 .ua-message {
   font-size: 1em;
@@ -21,12 +23,15 @@
   padding:10px;
   padding-bottom:30px;
 }
-.ua-green{
+.ua-success{
   color:#43A047;
 }
-.ua-red {
+.ua-error {
   color:#af3534;
   font-weight: bold;
+  text-align: center;
+  padding:10px;
+  margin-bottom:15px;
 }
 .ua-form {
   position: relative;
@@ -38,8 +43,14 @@
   text-align: center;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
 }
+.ua-help {
+  color:#af3534;
+  margin-top:-10px;
+  padding-bottom:12px;
+  font-weight: bold;
+}
 .ua-form input {
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
   outline: 0;
   background: #f2f2f2;
   width: 100%;
@@ -61,11 +72,24 @@
   font-size: 14px;
   -webkit-transition: all 0.3 ease;
   transition: all 0.3 ease;
+}
+.ua-pointer {
   cursor: pointer;
 }
-
-.ua-form .ua-btn:hover,.ua-form .ua-btn:active,.ua-form .ua-btn:focus {
+.ua-wait {
+  cursor: wait;
+}
+.ua-progress {
+  cursor: progress !important;
+}
+.ua-not-allowed {
+  cursor: not-allowed;
+}
+.ua-form .ua-btn:hover  {
   background: #43A047;
+}
+.ua-form .ua-btn:active {
+  background: #99d022;
 }
 .ua-form .ua-btn:disabled,
 .ua-form .ua-btn[disabled] {
@@ -84,19 +108,10 @@
   color: #4CAF50;
   text-decoration: none;
 }
-.ua-email-send {
-
-}
-.ua-email-verified {
-  
-}
 
 
-/* form-errors */
-.help-block {
-  padding-bottom:10px;
-}
-.has-error .help-block,
+/* form-inline-errors */
+/*.has-error .help-block,
 .has-error .control-label,
 .has-error .radio,
 .has-error .checkbox,
@@ -106,7 +121,11 @@
 .has-error.checkbox label,
 .has-error.radio-inline label,
 .has-error.checkbox-inline label {
-  color: #a94442;
+  background:#af3534;
+  color:white;
+  font-weight: bold;
+  width:100%;
+  padding:10px;
 }
 .has-error .form-control {
   border-color: #a94442;
@@ -125,7 +144,7 @@
 }
 .has-error .form-control-feedback {
   color: #a94442;
-}
+}*/
 
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {

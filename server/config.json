@@ -2,10 +2,11 @@
   "restApiRoot": "/api",
   "host": "localhost",
   "port": 3000,
+  "clienthost":"localhost",
+  "clientport":9000,
   "remoting": {
     "context": false,
     "rest": {
-      "handleErrors": false,
       "normalizeHttpPath": false,
       "xml": false
     },
@@ -17,6 +18,8 @@
       "extended": true,
       "limit": "100kb"
     },
-    "cors": false
-  }
+    "cors": false,
+    "handleErrors": false
+  },
+  "legacyExplorer": false
 }

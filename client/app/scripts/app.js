@@ -19,6 +19,7 @@ angular
     'lbServices',
   ])
   .constant('LOCALE', 0 ) // 0=nl, 1=en
+  .constant('LOOPBACK_URL', "http://localhost:3000/api")
   .config(function ( $stateProvider, $urlRouterProvider, LoopBackResourceProvider ) {
     LoopBackResourceProvider.setUrlBase('http://localhost:3000/api');
     $stateProvider
