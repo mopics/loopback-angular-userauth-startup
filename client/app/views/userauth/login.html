@@ -22,9 +22,10 @@
         </div>
         <div>
             <button class="ua-btn" 
+                    id="login-button"
                     ng-class="serverWait ? 'ua-progress' : 'ua-pointer'" 
                     type="submit" 
-                    ng-disabled="loginform.$invalid || serverWait" >login</button>
+                    ng-disabled="loginform.$invalid || serverWait" >Login</button>
         </div>
         <p class="ua-message"><a ui-sref="app.resetpassword"> {{['Wachtwoord vergeten?','Forgot password?'][locale]}} </a></p>
     </form>

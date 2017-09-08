@@ -7,8 +7,16 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Launch Program",
+            "name": "Launch Protractor",
+            "program": "C:\\Users\\peter\\AppData\\Roaming\\npm\\node_modules\\protractor\\bin\\protractor",
+            "args": ["${workspaceRoot}\\client\\test\\protractor.conf.js"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch LoopBack",
             "program": "${workspaceRoot}\\server\\server.js"
-        }
+        },
+
     ]
 }

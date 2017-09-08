@@ -37,6 +37,26 @@ Gets file back in previous commit-state.
 ## `git clone <repo_url>`
 Clones online repo to computer
 
+# Git HEAD deattached fix
+## `git branch temp`
+* Creates branch, attaches current HEAD to it
+## `git checkout temp`
+* Checks out to name
+## `git branch -f master temp`
+* points master to temp
+## Compare the 2 branches
+```
+git log --graph --decorate --pretty=oneline --abbrev-commit master origin/master temp
+git diff master temp
+git diff origin/master temp
+```
+## `git checkout master`
+* checks master out
+## `git branch -d temp`
+* deletes temp branch
+## `git push origin master`
+* pushes to master to remote repo
+
 
 
 

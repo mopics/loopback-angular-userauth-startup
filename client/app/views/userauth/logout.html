@@ -1,6 +1,6 @@
 
-<div class="ua-message">{{logoutMessage}}</div>
+<div class="ua-message" id="logout-message">{{logoutMessage}}</div>
 <div class="ua-back-message"><a ui-sref="app">{{ ['Stuur me terug naar de home pagina',
         'Send me back to the home page'][locale] }}</a></div>
-<div ng-show="loggedOut" class="ua-back-message"><a ui-sref="app.login">{{ ['Log opnieuw in.',
-        'Log in again.'][locale] }}</a></div>
+<div ng-show="loggedOut" class="ua-back-message"><a ui-sref="app.login">{{ ['Log opnieuw in',
+        'Log in again'][locale] }}</a></div>

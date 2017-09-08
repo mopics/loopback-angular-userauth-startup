@@ -103,6 +103,15 @@ angular
             controller:'SetNewPasswordCtrl'
           }
         }
+      })
+      .state('app.changepassword', {
+        url:'changepassword',
+        views:{
+          'content@':{
+            templateUrl:'views/userauth/changepassword.html',
+            controller:'ChangePasswordCtrl'
+          }
+        }
       });
       $urlRouterProvider.otherwise('/');
   });

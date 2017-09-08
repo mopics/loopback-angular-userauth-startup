@@ -5,7 +5,7 @@
 <div class="ua-title">{{["Gratis Account", 'Create a Free Account'][locale]}}</div>
 
 <div ng-show="!emailSend" class="ua-form" ng-class="{'ua-progress':serverWait}">
-    <div ng-show="signupError" class="ua-error">{{signupErrorMessage}}</div>
+    <div id="signup-error" ng-show="signupError" class="ua-error">{{signupErrorMessage}}</div>
     <form ng-submit="signup()" role="form" name="signupform" novalidate>
 
         <div>
@@ -34,7 +34,8 @@
         </div>
 
         <div>
-            <button class="ua-btn" 
+            <button class="ua-btn"
+                id="signup-button"
                 ng-class="serverWait ? 'ua-progress' : 'ua-pointer'" 
                 type="submit" 
                 ng-disabled="loginform.$invalid || serverWait" >
@@ -45,7 +46,7 @@
         <p class="ua-message">{{['Heeft u al een account?','Already registered?'][locale]}} <a ui-sref="app.login">Log in</a></p>
     </form>
 </div>
-<div ng-show="emailSend" class="ua-email-send">
+<div ng-show="emailSend" class="ua-email-send" id="email-send-callback">
     <p class="ua-message">{{['We hebben een email gestuurd naar','We have sent an email to'][locale]}} {{email}}.
         {{['Klik op de link in de email op om je account te activeren.','Click on the link in the email to activate your account.'][locale]}}</p>
     <p class="ua-message">{{

@@ -38,7 +38,19 @@ module.exports = function(config) {
 
     // list of files / patterns to exclude
     exclude: [
+      'test/protractor.conf.js', 'test/e2e/*.js'
     ],
+
+    // preprocess matching files before saving them to the browser
+    // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
+    preprocessors: {
+
+    },
+
+    // test results reporter to use
+    // possible values: 'dots', 'progress'
+    // available reporters: https://npmjs.org/browse/keyword/karma-reporter
+    reporters: ['progress' ],
 
     // web server port
     port: 8080,
@@ -52,11 +64,35 @@ module.exports = function(config) {
     // - PhantomJS
     // - IE (only Windows)
     browsers: [
-      'PhantomJS'
+      'Chrome', 'PhantomJS', 'PhantomJS_custom'
     ],
+    // Concurrency level
+    // how many browsers should be started simultaniously
+    concurrency: Infinity,
+
+    // you can define custom flags
+    customLaunchers: {
+      'PhantomJS_custom': {
+        base:'PhantomJS',
+        options:{
+          windowName:'my-window',
+          settings:{
+            webSecurityEnabled:false
+          },
+        },
+        flags: ['--load-images=true'],
+        debug: true
+      }
+    },
+    phantomjsLauncher: {
+      // Have phantomjs exit if a ResourceError is encountered 
+      // (useful if karma exits without killing phantom)
+      exitOnResourceError: true
+    },
 
     // Which plugins to enable
     plugins: [
+      'karma-chrome-launcher',
       'karma-phantomjs-launcher',
       'karma-jasmine'
     ],
@@ -65,6 +101,7 @@ module.exports = function(config) {
     // if true, it capture browsers, run tests and exit
     singleRun: false,
 
+    // enable / disable colors in the output (reporters and logs)
     colors: true,
 
     // level of logging

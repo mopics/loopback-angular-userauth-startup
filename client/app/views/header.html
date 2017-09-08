@@ -19,6 +19,9 @@
             <li><a ui-sref="app.resetpassword">Reset Password</a></li>
             <li><a ui-sref="app.setnewpassword({reset_key:'blabla13'})">Set new Password</a></li>
             <li><a ui-sref="app.login({status:'success_reset'})">Login after Reset</a></li>
+            <li ng-show="loginResult"><a ui-sref="app.changepassword">Change Password</a></li>
+
+
         </ul>
         </div>
     </div>

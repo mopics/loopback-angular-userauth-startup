@@ -8,7 +8,7 @@
  * Controller of the clientApp
  */
 angular.module('clientApp')
-.controller('LoginCtrl', function($scope, $rootScope, $state, $stateParams, AppUser, LOCALE ){
+.controller('LoginCtrl', function($scope, $rootScope, $state, $stateParams, AppUser, LOCALE, $http ){
     $scope.status = $stateParams.status;
     $scope.userRegistered = true;
     $scope.locale = LOCALE;
@@ -18,33 +18,43 @@ angular.module('clientApp')
     $scope.loginError = false;
     $scope.loginErrorMessage = "";
 
+    
+    function handleLoginSuccess(res){
+      $rootScope.loginResult = res;
+      $scope.loginResult = res;
+      // redirect to ???
+      $scope.serverWait = false;
+      $state.go('app');
+    };
+    function handleLoginError(res){
+      $scope.serverWait = false;
+      $scope.loginError = true;
+      if ( res.data === null ){
+        $scope.loginErrorMessage = ['Kon geen verbinding maken met de server. Probeer het later nog eens.',
+        'Could not connect to server, please try again later.'][$scope.locale];
+      }
+      else if ( res.data.error.code==="LOGIN_FAILED_EMAIL_NOT_VERIFIED" ) {
+        $scope.loginErrorMessage = ['Aanmelden mislukt omdat uw email niet is gecontroleerd.', 
+        'Login failed because your email has not been verified.'][$scope.locale];
+      }
+      else {
+        $scope.loginErrorMessage = ['Uw gebruikersnaam en/of het wachtwoord is onjuist. Probeer het opnieuw.',
+        'Invalid email address/password combination. Please try again.'][$scope.locale];
+      }
+    }
+    $scope.testLogin = function(){
+      $http({
+        method: 'GET',
+        url: "http://testlogin",
+        data: $scope.credentials,
+        headers: {'Content-Type': 'application/json'}
+      }).then( handleLoginSuccess, handleLoginError );
+    };
     $scope.login = function() {
       $scope.loginError = false;
       $scope.loginErrorMessage = "";
       $scope.serverWait = true;
-      $scope.loginResult = AppUser.login($scope.credentials,
-        function(res) { 
-          $rootScope.loginResult = res;
-          // redirect to ???
-          $scope.serverWait = false;
-          $state.go('app');
-
-        }, function(res) {
-          $scope.serverWait = false;
-          $scope.loginError = true;
-          if ( res.data === null ){
-            $scope.loginErrorMessage = ['Kon geen verbinding maken met de server. Probeer het later nog eens.',
-            'Could not connect to server, please try again later.'][$scope.locale];
-          }
-          else if ( res.data.error.code==="LOGIN_FAILED_EMAIL_NOT_VERIFIED" ) {
-            $scope.loginErrorMessage = ['Aanmelden mislukt omdat uw email niet is gecontroleerd.', 
-            'Login failed because your email has not been verified.'][$scope.locale];
-          }
-          else {
-            $scope.loginErrorMessage = ['Uw gebruikersnaam en/of het wachtwoord is onjuist. Probeer het opnieuw.',
-            'Invalid email address/password combination. Please try again.'][$scope.locale];
-          }
-      });
+      AppUser.login( $scope.credentials, handleLoginSuccess, handleLoginError );
     };
 })
 .controller('LogoutCtrl', function($scope, $rootScope, $state, AppUser, LOCALE ){
@@ -55,22 +65,22 @@ angular.module('clientApp')
   if( $rootScope.loginResult ){
     AppUser.logout( $rootScope.loginResult,
       function(res){
-        $scope.logoutMessage = ["U bent succesvol uit gelogd!",
-        "You are successfully logged out."][$scope.locale];
+        $scope.logoutMessage = ["U bent succesvol uit gelogd",
+        "You are successfully logged out"][$scope.locale];
         $scope.loggedOut = true;
         $rootScope.loginResult = null;
       },
       function( res ){
-        $scope.logoutMessage = ["U bent succesvol uit gelogd!",
-        "You are successfully logged out."][$scope.locale];
+        $scope.logoutMessage = ["U bent succesvol uit gelogd",
+        "You are successfully logged out"][$scope.locale];
         $scope.loggedOut = true;
         $rootScope.loginResult = null;
       }
     );
   }
   else {
-    $scope.logoutMessage = ["U bent succesvol uit gelogd!",
-    "You are successfully logged out."][$scope.locale];
+    $scope.logoutMessage = ["U bent succesvol uit gelogd",
+    "You are successfully logged out"][$scope.locale];
     $scope.loggedOut = true;
   }
 })
@@ -139,11 +149,13 @@ angular.module('clientApp')
       function(res){
         $scope.serverWait = false;
         $scope.error = true;
-        if( res.data === null ){
+        if( res.data ){
+          $scope.errorMessage = ['Deze email is niet bij ons bekend',
+          'Email not found'][$scope.locale];
+        }
+        else {
           $scope.errorMessage = ['Kon geen verbinding maken met de server. Probeer het later nog eens.',
           'Could not connect to server, please try again later.'][$scope.locale];
-        } else {
-          $scope.errorMessage = res.data.error.message;
         }
       }
     );
@@ -179,16 +191,27 @@ angular.module('clientApp')
         $scope.passwordResetSuccess = true;
         $scope.error = false;
         $scope.serverWait = false;
-        $state.go("app.login({status:'success_reset'})");
+        $state.go('app.login',{status:'success_reset'});
       }, function errorCallback(res) {
         $scope.error = true;
         $scope.serverWait = false;
         if( res.data === null ){
+          $scope.errorMessage = res.data.error.message;
+        } else {
           $scope.errorMessage = ['Kon geen verbinding maken met de server. Probeer het later nog eens.',
           'Could not connect to server, please try again later.'][$scope.locale];
-        } else {
-          $scope.errorMessage = res.data.error.message;
         }
       });
   };
-});
+})
+.controller('ChangePasswordCtrl', function($scope, $rootScope, $state, AppUser, LOCALE ){
+   $scope.locale = LOCALE;
+   $scope.loginResult = $rootScope.loginResult;
+   $scope.password = "";
+   $scope.password2 = "";
+   /*if( $scope.loginResult===undefined || $scope.loginResult===null ){
+     $state.go('app.login');
+   }*/
+   console.log('foo');
+})
+;
